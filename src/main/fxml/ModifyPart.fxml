@@ -101,6 +101,6 @@
          </padding>
       </VBox>
       <Button layoutX="304.0" layoutY="563.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="97.0" text="Save" />
-      <Button layoutX="413.0" layoutY="563.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="97.0" text="Cancel" />
+      <Button layoutX="413.0" layoutY="563.0" mnemonicParsing="false" onAction="#clickCancelButton" prefHeight="38.0" prefWidth="97.0" text="Cancel" />
    </children>
 </AnchorPane>

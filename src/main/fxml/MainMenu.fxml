@@ -23,10 +23,10 @@
                         <Font name="System Bold" size="20.0" />
                     </font>
                 </Label>
-                <TextField fx:id="partSearch" layoutX="428.0" layoutY="17.0" />
-                <Button fx:id="searchPartButton" layoutX="351.0" layoutY="17.0" mnemonicParsing="false" text="Search" />
-                <Button fx:id="addPart" layoutX="298.0" layoutY="322.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="88.0" text="Add" />
-                <Button fx:id="modifyPart" layoutX="398.0" layoutY="322.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="88.0" text="Modify" />
+                <TextField fx:id="partSearchField" layoutX="428.0" layoutY="17.0" />
+                <Button fx:id="searchPartButton" layoutX="351.0" layoutY="17.0" mnemonicParsing="false" onAction="#searchParts" text="Search" />
+                <Button fx:id="addPart" layoutX="298.0" layoutY="322.0" mnemonicParsing="false" onAction="#clickAddPartButton" prefHeight="45.0" prefWidth="88.0" text="Add" />
+                <Button fx:id="modifyPart" layoutX="398.0" layoutY="322.0" mnemonicParsing="false" onAction="#clickModifyPartButton" prefHeight="45.0" prefWidth="88.0" text="Modify" />
                 <Button fx:id="deletePart" layoutX="496.0" layoutY="322.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="88.0" text="Delete" />
                 <TableView fx:id="partTable" layoutX="24.0" layoutY="59.0" prefHeight="240.0" prefWidth="592.0">
                     <columns>
@@ -45,10 +45,10 @@
                         <Font name="System Bold" size="20.0" />
                     </font>
                 </Label>
-                <TextField fx:id="productSearch" layoutX="428.0" layoutY="17.0" />
+                <TextField fx:id="productSearchField" layoutX="428.0" layoutY="17.0" />
                 <Button fx:id="searchProductButton" layoutX="351.0" layoutY="17.0" mnemonicParsing="false" text="Search" />
-                <Button fx:id="addProduct" layoutX="298.0" layoutY="322.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="88.0" text="Add" />
-                <Button fx:id="modifyProduct" layoutX="398.0" layoutY="322.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="88.0" text="Modify" />
+                <Button fx:id="addProduct" layoutX="298.0" layoutY="322.0" mnemonicParsing="false" onAction="#clickAddProductButton" prefHeight="45.0" prefWidth="88.0" text="Add" />
+                <Button fx:id="modifyProduct" layoutX="398.0" layoutY="322.0" mnemonicParsing="false" onAction="#clickModifyProductButton" prefHeight="45.0" prefWidth="88.0" text="Modify" />
                 <Button fx:id="deleteProduct" layoutX="496.0" layoutY="322.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="88.0" text="Delete" />
             <TableView fx:id="productTable" layoutX="24.0" layoutY="59.0" prefHeight="240.0" prefWidth="592.0">
                <columns>

@@ -15,18 +15,19 @@ import java.net.URL;
 public class Main extends Application {
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
-        primaryStage.setTitle("Inventory Management System");
-        primaryStage.show();
+    public void start(Stage stage) throws Exception {
+        Parent root = FXMLLoader.load(getClass().getResource("../main/fxml/MainMenu.fxml"));
+
+        Scene scene = new Scene(root, 1364, 617);
+
+        stage.setTitle("Inventory Management System");
+        stage.setScene(scene);
+        stage.show();
     }
 
 
     public static void main(String[] args) {
-        Inventory inventory = new Inventory();
-        InHouse part = new InHouse(1, "test", 2.00, 10, 1, 10, 0001);
-        inventory.addPart(part);
 
-        System.out.println(inventory.getAllParts().get(0).getName());
 
         launch(args);
     }
