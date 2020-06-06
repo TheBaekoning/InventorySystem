@@ -27,13 +27,13 @@
                 <Button fx:id="searchPartButton" layoutX="351.0" layoutY="17.0" mnemonicParsing="false" onAction="#searchParts" text="Search" />
                 <Button fx:id="addPart" layoutX="298.0" layoutY="322.0" mnemonicParsing="false" onAction="#clickAddPartButton" prefHeight="45.0" prefWidth="88.0" text="Add" />
                 <Button fx:id="modifyPart" layoutX="398.0" layoutY="322.0" mnemonicParsing="false" onAction="#clickModifyPartButton" prefHeight="45.0" prefWidth="88.0" text="Modify" />
-                <Button fx:id="deletePart" layoutX="496.0" layoutY="322.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="88.0" text="Delete" />
+                <Button fx:id="deletePart" layoutX="496.0" layoutY="322.0" mnemonicParsing="false" onAction="#clickDeletePart" prefHeight="45.0" prefWidth="88.0" text="Delete" />
                 <TableView fx:id="partTable" layoutX="24.0" layoutY="59.0" prefHeight="240.0" prefWidth="592.0">
                     <columns>
-                        <TableColumn prefWidth="137.00003051757812" text="Part ID" />
-                        <TableColumn prefWidth="133.0" text="Part Name" />
-                        <TableColumn prefWidth="164.0" text="Inventory Level" />
-                        <TableColumn prefWidth="157.0" text="Price/Cost Per Unit" />
+                        <TableColumn fx:id="partIdColumn" prefWidth="137.00003051757812" text="Part ID" />
+                        <TableColumn fx:id="partNameColumn" prefWidth="133.0" text="Part Name" />
+                        <TableColumn fx:id="partInvColumn" prefWidth="164.0" text="Inventory Level" />
+                        <TableColumn fx:id="partCostColumn" prefWidth="157.0" text="Price/Cost Per Unit" />
                     </columns>
                 </TableView>
             </children>
@@ -46,16 +46,16 @@
                     </font>
                 </Label>
                 <TextField fx:id="productSearchField" layoutX="428.0" layoutY="17.0" />
-                <Button fx:id="searchProductButton" layoutX="351.0" layoutY="17.0" mnemonicParsing="false" text="Search" />
+                <Button fx:id="searchProductButton" layoutX="351.0" layoutY="17.0" mnemonicParsing="false" onAction="#searchProducts" text="Search" />
                 <Button fx:id="addProduct" layoutX="298.0" layoutY="322.0" mnemonicParsing="false" onAction="#clickAddProductButton" prefHeight="45.0" prefWidth="88.0" text="Add" />
                 <Button fx:id="modifyProduct" layoutX="398.0" layoutY="322.0" mnemonicParsing="false" onAction="#clickModifyProductButton" prefHeight="45.0" prefWidth="88.0" text="Modify" />
-                <Button fx:id="deleteProduct" layoutX="496.0" layoutY="322.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="88.0" text="Delete" />
+                <Button fx:id="deleteProduct" layoutX="496.0" layoutY="322.0" mnemonicParsing="false" onAction="#clickDeleteProduct" prefHeight="45.0" prefWidth="88.0" text="Delete" />
             <TableView fx:id="productTable" layoutX="24.0" layoutY="59.0" prefHeight="240.0" prefWidth="592.0">
                <columns>
-                  <TableColumn prefWidth="137.00003051757812" text="Part ID" />
-                  <TableColumn prefWidth="133.0" text="Part Name" />
-                  <TableColumn prefWidth="164.0" text="Inventory Level" />
-                  <TableColumn prefWidth="157.0" text="Price/Cost Per Unit" />
+                  <TableColumn fx:id="productIdColumn" prefWidth="137.00003051757812" text="Product ID" />
+                  <TableColumn fx:id="productNameColumn" prefWidth="133.0" text="Product Name" />
+                  <TableColumn fx:id="productInvColumn" prefWidth="164.0" text="Inventory Level" />
+                  <TableColumn fx:id="productCostColumn" prefWidth="157.0" text="Price/Cost Per Unit" />
                </columns>
             </TableView>
             </children>
