@@ -4,19 +4,16 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import main.model.*;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class MainMenuController implements Initializable {
@@ -194,12 +191,30 @@ public class MainMenuController implements Initializable {
 
     @FXML
     private void clickDeletePart() {
-        inventory.deletePart(partTable.getSelectionModel().getSelectedItem());
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Delete Confirmation");
+        alert.setHeaderText("Do you wish to delete Part ID: "
+                + partTable.getSelectionModel().getSelectedItem().getId() + " ?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            inventory.deletePart(partTable.getSelectionModel().getSelectedItem());
+        }
+
     }
 
     @FXML
     private void clickDeleteProduct() {
-        inventory.deleteProduct(productTable.getSelectionModel().getSelectedItem());
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Delete Confirmation");
+        alert.setHeaderText("Do you wish to delete Product ID: "
+                + productTable.getSelectionModel().getSelectedItem().getId() + " ?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            inventory.deleteProduct(productTable.getSelectionModel().getSelectedItem());
+        }
+
     }
 
     public void addPart(InHouse inHouse) {

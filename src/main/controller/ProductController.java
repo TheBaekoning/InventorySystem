@@ -10,13 +10,14 @@ import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
-import main.model.InHouse;
+import main.exceptionHandling.OutOfBoundsInventory;
 import main.model.Inventory;
 import main.model.Part;
 import main.model.Product;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class ProductController implements Initializable {
@@ -60,26 +61,40 @@ public class ProductController implements Initializable {
 
     @FXML
     private void clickCancelButton(ActionEvent event) throws IOException {
-        if (!altPartTable.getItems().isEmpty()) {
-            for (int i = 0; i < altPartTable.getItems().size(); i++) {
-                inventory.addPart(altPartTable.getItems().get(i));
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Cancel Confirmation");
+        alert.setHeaderText("Do you wish to cancel?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            if (!altPartTable.getItems().isEmpty()) {
+                for (int i = 0; i < altPartTable.getItems().size(); i++) {
+                    inventory.addPart(altPartTable.getItems().get(i));
+                }
             }
+            Parent partPageParent = FXMLLoader.load(getClass().getResource("../fxml/MainMenu.fxml"));
+            Scene partPageScene = new Scene(partPageParent);
+            Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            appStage.setScene(partPageScene);
+            appStage.show();
         }
-        Parent partPageParent = FXMLLoader.load(getClass().getResource("../fxml/MainMenu.fxml"));
-        Scene partPageScene = new Scene(partPageParent);
-        Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        appStage.setScene(partPageScene);
-        appStage.show();
     }
 
     @FXML
-    private void clickAddProduct() throws IOException {
+    private void clickAddProduct() throws IOException, OutOfBoundsInventory {
         product.setId(Integer.parseInt(productId.getText()));
         product.setName(productName.getText());
         product.setPrice(Double.parseDouble(productCost.getText()));
-        product.setStock(Integer.parseInt(productInv.getText()));
         product.setMin(Integer.parseInt(productMin.getText()));
         product.setMax(Integer.parseInt(productMax.getText()));
+
+
+        if (Integer.parseInt(productInv.getText()) > Integer.parseInt(productMax.getText()) ||
+                Integer.parseInt(productInv.getText()) < Integer.parseInt(productMin.getText()))
+            throw new OutOfBoundsInventory("Entering an inventory value that exceeds the " +
+                    "minimum or maximum value for that part or product");
+        product.setStock(Integer.parseInt(productInv.getText()));
+
         Stage stage;
         Parent root;
         stage = (Stage) addProductButton.getScene().getWindow();
@@ -134,13 +149,18 @@ public class ProductController implements Initializable {
     }
 
     @FXML
-    private void clickModifyProduct() throws IOException {
+    private void clickModifyProduct() throws IOException, OutOfBoundsInventory {
         product.setId(Integer.parseInt(productId.getText()));
         product.setName(productName.getText());
         product.setPrice(Double.parseDouble(productCost.getText()));
-        product.setStock(Integer.parseInt(productInv.getText()));
         product.setMin(Integer.parseInt(productMin.getText()));
         product.setMax(Integer.parseInt(productMax.getText()));
+
+        if (Integer.parseInt(productInv.getText()) > Integer.parseInt(productMax.getText()) ||
+                Integer.parseInt(productInv.getText()) < Integer.parseInt(productMin.getText()))
+            throw new OutOfBoundsInventory("Entering an inventory value that exceeds the " +
+                    "minimum or maximum value for that part or product");
+        product.setStock(Integer.parseInt(productInv.getText()));
         Stage stage;
         Parent root;
         stage = (Stage) modifyProductButton.getScene().getWindow();

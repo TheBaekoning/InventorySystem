@@ -5,16 +5,15 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.RadioButton;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
+import main.exceptionHandling.OutOfBoundsInventory;
 import main.model.InHouse;
 import main.model.OutSourced;
 import main.model.Part;
 
 import java.io.IOException;
+import java.util.Optional;
 
 public class PartController {
     @FXML
@@ -62,14 +61,24 @@ public class PartController {
 
     @FXML
     private void clickCancelButton(ActionEvent event) throws IOException {
-        Stage stage;
-        Parent root;
-        stage = (Stage) cancelButton.getScene().getWindow();
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/MainMenu.fxml"));
-        root = loader.load();
-        Scene scene = new Scene(root);
-        stage.setScene(scene);
-        stage.show();
+
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Cancel Confirmation");
+        alert.setHeaderText("Do you wish to cancel?");
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK) {
+            Stage stage;
+            Parent root;
+            stage = (Stage) cancelButton.getScene().getWindow();
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/MainMenu.fxml"));
+            root = loader.load();
+            Scene scene = new Scene(root);
+            stage.setScene(scene);
+            stage.show();
+        }
+
+
     }
 
     @FXML
@@ -107,7 +116,7 @@ public class PartController {
     }
 
     @FXML
-    private void clickAddSavePart() throws IOException {
+    private void clickAddSavePart() throws IOException, OutOfBoundsInventory {
         if (inHouseButton.isSelected()) {
             InHouse inHouse = new InHouse(Integer.parseInt(partId.getText()),
                     partName.getText(),
@@ -116,6 +125,11 @@ public class PartController {
                     Integer.parseInt(partMin.getText()),
                     Integer.parseInt(partMax.getText()),
                     Integer.parseInt(partCompany.getText()));
+
+            if (Integer.parseInt(partInv.getText()) > Integer.parseInt(partMax.getText()) ||
+                    Integer.parseInt(partInv.getText()) < Integer.parseInt(partMin.getText()))
+                throw new OutOfBoundsInventory("Entering an inventory value that exceeds the " +
+                        "minimum or maximum value for that part or product");
 
             Stage stage;
             Parent root;
@@ -138,6 +152,11 @@ public class PartController {
                     Integer.parseInt(partMin.getText()),
                     Integer.parseInt(partMax.getText()),
                     partCompany.getText());
+
+            if (Integer.parseInt(partInv.getText()) > Integer.parseInt(partMax.getText()) ||
+                    Integer.parseInt(partInv.getText()) < Integer.parseInt(partMin.getText()))
+                throw new OutOfBoundsInventory("Entering an inventory value that exceeds the " +
+                        "minimum or maximum value for that part or product");
 
             Stage stage;
             Parent root;
@@ -181,7 +200,7 @@ public class PartController {
     }
 
     @FXML
-    private void clickSaveModify() throws IOException {
+    private void clickSaveModify() throws IOException, OutOfBoundsInventory {
         if (inHouseButton.isSelected()) {
             InHouse inHouse = new InHouse(Integer.parseInt(partId.getText()),
                     partName.getText(),
@@ -190,6 +209,12 @@ public class PartController {
                     Integer.parseInt(partMin.getText()),
                     Integer.parseInt(partMax.getText()),
                     Integer.parseInt(partCompany.getText()));
+
+            if (Integer.parseInt(partInv.getText()) > Integer.parseInt(partMax.getText()) ||
+                    Integer.parseInt(partInv.getText()) < Integer.parseInt(partMin.getText()))
+                throw new OutOfBoundsInventory("Entering an inventory value that exceeds the " +
+                        "minimum or maximum value for that part or product");
+
 
             Stage stage;
             Parent root;
@@ -211,6 +236,11 @@ public class PartController {
                     Integer.parseInt(partMin.getText()),
                     Integer.parseInt(partMax.getText()),
                     partCompany.getText());
+
+            if (Integer.parseInt(partInv.getText()) > Integer.parseInt(partMax.getText()) ||
+                    Integer.parseInt(partInv.getText()) < Integer.parseInt(partMin.getText()))
+                throw new OutOfBoundsInventory("Entering an inventory value that exceeds the " +
+                        "minimum or maximum value for that part or product");
 
             Stage stage;
             Parent root;
