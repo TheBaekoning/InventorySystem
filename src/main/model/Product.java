@@ -1,9 +1,14 @@
 package main.model;
 
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class Product {
     private ObservableList<Part> associatedParts;
+    List<Part> associatedPartsList = new ArrayList<>();
     private int id;
     private String name;
     private double price;
@@ -12,12 +17,17 @@ public class Product {
     private int max;
 
     public Product(int id, String name, double price, int stock, int min, int max) {
-        setId(id);
-        setName(name);
-        setPrice(price);
-        setStock(stock);
-        setMin(min);
-        setMax(max);
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.stock = stock;
+        this.min = min;
+        this.max = max;
+        associatedParts = FXCollections.observableList(associatedPartsList);
+    }
+
+    public Product(){
+        associatedParts = FXCollections.observableList(associatedPartsList);
     }
 
     public void setId(int id) {

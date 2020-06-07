@@ -36,7 +36,7 @@
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <TextField fx:id="partId" layoutX="226.0" layoutY="6.0" />
+                  <TextField fx:id="partId" editable="false" layoutX="226.0" layoutY="6.0" />
                </children>
             </Pane>
             <Pane prefHeight="38.0" prefWidth="411.0">
@@ -101,6 +101,6 @@
          </padding>
       </VBox>
       <Button fx:id="savePartButton" layoutX="304.0" layoutY="563.0" mnemonicParsing="false" onAction="#clickAddSavePart" prefHeight="38.0" prefWidth="97.0" text="Save" />
-      <Button layoutX="413.0" layoutY="563.0" mnemonicParsing="false" onAction="#clickCancelButton" prefHeight="38.0" prefWidth="97.0" text="Cancel" />
+      <Button fx:id="cancelButton" layoutX="413.0" layoutY="563.0" mnemonicParsing="false" onAction="#clickCancelButton" prefHeight="38.0" prefWidth="97.0" text="Cancel" />
    </children>
 </AnchorPane>

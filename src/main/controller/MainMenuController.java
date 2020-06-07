@@ -7,6 +7,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -35,24 +36,48 @@ public class MainMenuController implements Initializable {
     public TableColumn productInvColumn;
     public TableColumn productCostColumn;
 
-    public Inventory inventory = new Inventory();
+    @FXML
+    public Button addPart;
 
-    public int partId = 1;
-    public int productId = 1;
+    @FXML
+    public Button addProduct;
+
+    @FXML
+    public Button modifyPart;
+
+    @FXML
+    public Button modifyProduct;
+
+    public static Inventory inventory = new Inventory();
+
+    public static int partId = 1;
+    public static int productId = 1;
+
+    private static int updateIndex = 0;
+
+    private static Boolean isInitialized = false;
+
+    public static Product modifiedProduct;
 
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        inventory.addPart(new InHouse(partId++, "2", 3, 4, 5, 6, 7));
-        inventory.addPart(new InHouse(partId++, "23", 3.2, 5, 5, 6, 8));
-        inventory.addPart(new InHouse(partId++, "24", 31, 6, 5, 6, 9));
+        if (!isInitialized) {
+            inventory.addPart(new InHouse(partId++, "2", 3, 4, 5, 6, 7));
+            inventory.addPart(new InHouse(partId++, "23", 3.2, 5, 5, 6, 8));
+            inventory.addPart(new InHouse(partId++, "24", 31, 6, 5, 6, 9));
+
+            inventory.addProduct(new Product(productId++, "2", 3, 4, 5, 6));
+
+            isInitialized = true;
+        }
+
         partIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         partNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         partInvColumn.setCellValueFactory(new PropertyValueFactory<>("stock"));
         partCostColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
         partTable.setItems(inventory.getAllParts());
 
-        inventory.addProduct(new Product(productId++, "2", 3, 4, 5, 6));
         productIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
         productNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         productInvColumn.setCellValueFactory(new PropertyValueFactory<>("stock"));
@@ -88,29 +113,57 @@ public class MainMenuController implements Initializable {
 
     @FXML
     private void clickAddPartButton(ActionEvent event) throws IOException {
-        Parent partPageParent = FXMLLoader.load(getClass().getResource("../fxml/AddPart.fxml"));
-        Scene partPageScene = new Scene(partPageParent);
-        Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        appStage.setScene(partPageScene);
-        appStage.show();
+        Stage stage;
+        Parent root;
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/AddPart.fxml"));
+        stage = (Stage) addPart.getScene().getWindow();
+        root = loader.load();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+        PartController partController = loader.getController();
+        partController.partNumber = partId;
     }
 
     @FXML
     private void clickModifyPartButton(ActionEvent event) throws IOException {
-        Parent partPageParent = FXMLLoader.load(getClass().getResource("../fxml/ModifyPart.fxml"));
-        Scene partPageScene = new Scene(partPageParent);
-        Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        appStage.setScene(partPageScene);
-        appStage.show();
+        Stage stage;
+        Parent root;
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/ModifyPart.fxml"));
+        stage = (Stage) modifyPart.getScene().getWindow();
+        root = loader.load();
+        PartController partController = loader.getController();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+        Part part = partTable.getSelectionModel().getSelectedItem();
+        String className = part.getClass().getName();
+        switch (className) {
+            case "main.model.InHouse" :
+                partController.setPart((InHouse) part);
+                break;
+            case "main.model.OutSourced" :
+                partController.setPart((OutSourced) part);
+                break;
+        }
+        for (int i=0; i < inventory.getAllParts().size(); i++){
+            if (inventory.getAllParts().get(i).getId() == part.getId() )
+                updateIndex = i;
+        }
+        partController.modifyPart = part;
     }
 
     @FXML
     private void clickAddProductButton(ActionEvent event) throws IOException {
-        Parent partPageParent = FXMLLoader.load(getClass().getResource("../fxml/AddProduct.fxml"));
-        Scene partPageScene = new Scene(partPageParent);
-        Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        appStage.setScene(partPageScene);
-        appStage.show();
+        Stage stage;
+        Parent root;
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/AddProduct.fxml"));
+        stage = (Stage) addProduct.getScene().getWindow();
+        root = loader.load();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+        ProductController productController = loader.getController();
     }
 
     @FXML
@@ -143,5 +196,17 @@ public class MainMenuController implements Initializable {
 
     public void addPart(OutSourced outSourced) {
         inventory.addPart(outSourced);
+    }
+
+    public void updatePart(Part part){
+        inventory.updatePart(updateIndex, part);
+    }
+
+    public void addProduct(Product product){
+        inventory.addProduct(product);
+    }
+
+    public void updateProduct(Product product) {
+        inventory.updateProduct(updateIndex, product);
     }
 }
