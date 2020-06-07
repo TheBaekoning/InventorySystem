@@ -51,6 +51,8 @@ public class ProductController implements Initializable {
 
     @FXML
     Button addProductButton;
+    @FXML
+    Button modifyProductButton;
 
     @FXML
     TableView<Part> altPartTable;
@@ -106,8 +108,12 @@ public class ProductController implements Initializable {
 
     @FXML
     private void clickDeletePart() {
-        InHouse inhouse = new InHouse(1, "2", 3, 4, 5, 6, 7);
-        product.addAssociatedPart(inhouse);
+        Part part = altPartTable.getSelectionModel().getSelectedItem();
+        if (part == null)
+            return;
+
+        inventory.addPart(part);
+        product.deleteAssociatedPart(part);
     }
 
     @FXML
@@ -127,6 +133,42 @@ public class ProductController implements Initializable {
         altPartTable.setItems(product.getAllAssociatedParts());
     }
 
+    @FXML
+    private void clickModifyProduct() throws IOException {
+        product.setId(Integer.parseInt(productId.getText()));
+        product.setName(productName.getText());
+        product.setPrice(Double.parseDouble(productCost.getText()));
+        product.setStock(Integer.parseInt(productInv.getText()));
+        product.setMin(Integer.parseInt(productMin.getText()));
+        product.setMax(Integer.parseInt(productMax.getText()));
+        Stage stage;
+        Parent root;
+        stage = (Stage) modifyProductButton.getScene().getWindow();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/MainMenu.fxml"));
+        root = loader.load();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+        MainMenuController mainMenuController = loader.getController();
+        mainMenuController.updateProduct(product);
+    }
+
+    public void setProduct(Product product) {
+        productId.setText(Integer.toString(product.getId()));
+        productName.setText(product.getName());
+        productInv.setText(Integer.toString(product.getStock()));
+        productCost.setText(Double.toString(product.getPrice()));
+        productMin.setText(Integer.toString(product.getMin()));
+        productMax.setText(Integer.toString(product.getMax()));
+        this.product = product;
+        altPartIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        altPartNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        altPartInvColumn.setCellValueFactory(new PropertyValueFactory<>("stock"));
+        altPartCostColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
+
+        altPartTable.setItems(product.getAllAssociatedParts());
+    }
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         inventory = MainMenuController.inventory;
@@ -137,13 +179,13 @@ public class ProductController implements Initializable {
         partCostColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
         partTable.setItems(inventory.getAllParts());
 
-        if (MainMenuController.modifiedProduct != null) {
+        if (product != null) {
             altPartIdColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
             altPartNameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
             altPartInvColumn.setCellValueFactory(new PropertyValueFactory<>("stock"));
             altPartCostColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
 
-            partTable.setItems(MainMenuController.modifiedProduct.getAllAssociatedParts());
+            altPartTable.setItems(product.getAllAssociatedParts());
         }
 
         product = new Product();

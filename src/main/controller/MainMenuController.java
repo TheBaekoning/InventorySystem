@@ -68,6 +68,8 @@ public class MainMenuController implements Initializable {
             inventory.addPart(new InHouse(partId++, "24", 31, 6, 5, 6, 9));
 
             inventory.addProduct(new Product(productId++, "2", 3, 4, 5, 6));
+            inventory.addProduct(new Product(productId++, "3", 3, 4, 5, 6));
+            inventory.addProduct(new Product(productId++, "4", 3, 4, 5, 6));
 
             isInitialized = true;
         }
@@ -139,15 +141,15 @@ public class MainMenuController implements Initializable {
         Part part = partTable.getSelectionModel().getSelectedItem();
         String className = part.getClass().getName();
         switch (className) {
-            case "main.model.InHouse" :
+            case "main.model.InHouse":
                 partController.setPart((InHouse) part);
                 break;
-            case "main.model.OutSourced" :
+            case "main.model.OutSourced":
                 partController.setPart((OutSourced) part);
                 break;
         }
-        for (int i=0; i < inventory.getAllParts().size(); i++){
-            if (inventory.getAllParts().get(i).getId() == part.getId() )
+        for (int i = 0; i < inventory.getAllParts().size(); i++) {
+            if (inventory.getAllParts().get(i).getId() == part.getId())
                 updateIndex = i;
         }
         partController.modifyPart = part;
@@ -168,11 +170,21 @@ public class MainMenuController implements Initializable {
 
     @FXML
     private void clickModifyProductButton(ActionEvent event) throws IOException {
-        Parent partPageParent = FXMLLoader.load(getClass().getResource("../fxml/ModifyProduct.fxml"));
-        Scene partPageScene = new Scene(partPageParent);
-        Stage appStage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-        appStage.setScene(partPageScene);
-        appStage.show();
+        Stage stage;
+        Parent root;
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("../fxml/ModifyProduct.fxml"));
+        stage = (Stage) modifyProduct.getScene().getWindow();
+        root = loader.load();
+        Scene scene = new Scene(root);
+        stage.setScene(scene);
+        stage.show();
+        ProductController productController = loader.getController();
+        productController.setProduct(productTable.getSelectionModel().getSelectedItem());
+        for (int i = 0; i < inventory.getAllProducts().size(); i++) {
+            if (inventory.getAllProducts().get(i).getId() == productTable
+                    .getSelectionModel().getSelectedItem().getId())
+                updateIndex = i;
+        }
     }
 
     @FXML
@@ -198,11 +210,11 @@ public class MainMenuController implements Initializable {
         inventory.addPart(outSourced);
     }
 
-    public void updatePart(Part part){
+    public void updatePart(Part part) {
         inventory.updatePart(updateIndex, part);
     }
 
-    public void addProduct(Product product){
+    public void addProduct(Product product) {
         inventory.addProduct(product);
     }
 
