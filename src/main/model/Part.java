@@ -9,12 +9,12 @@ abstract public class Part {
     private int max;
 
     public Part(int id, String name, double price, int stock, int min, int max) {
-        setId(id);
-        setName(name);
-        setPrice(price);
-        setStock(stock);
-        setMin(min);
-        setMax(max);
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.stock = stock;
+        this.min = min;
+        this.max = max;
     }
 
     public void setId(int id) {

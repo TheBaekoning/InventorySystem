@@ -17,12 +17,12 @@
             <Font name="System Bold" size="18.0" />
          </font>
       </Label>
-      <RadioButton layoutX="147.0" layoutY="35.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="114.0" text="In-House">
+      <RadioButton fx:id="inHouseButton" layoutX="147.0" layoutY="35.0" mnemonicParsing="false" onAction="#inHouseSelected" prefHeight="24.0" prefWidth="114.0" text="In-House">
          <font>
             <Font size="15.0" />
          </font>
       </RadioButton>
-      <RadioButton layoutX="272.0" layoutY="35.0" mnemonicParsing="false" prefHeight="24.0" prefWidth="114.0" text="Outsourced">
+      <RadioButton fx:id="outSourcedButton" layoutX="272.0" layoutY="35.0" mnemonicParsing="false" onAction="#outsourcedSelected" prefHeight="24.0" prefWidth="114.0" text="Outsourced">
          <font>
             <Font size="15.0" />
          </font>
@@ -36,7 +36,7 @@
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <TextField layoutX="226.0" layoutY="6.0" />
+                  <TextField fx:id="partId" editable="false" layoutX="226.0" layoutY="6.0" />
                </children>
             </Pane>
             <Pane prefHeight="38.0" prefWidth="411.0">
@@ -46,7 +46,7 @@
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <TextField layoutX="226.0" layoutY="6.0" />
+                  <TextField fx:id="partName" layoutX="226.0" layoutY="6.0" />
                </children>
             </Pane>
             <Pane prefHeight="38.0" prefWidth="411.0">
@@ -56,7 +56,7 @@
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <TextField layoutX="226.0" layoutY="6.0" />
+                  <TextField fx:id="partInv" layoutX="226.0" layoutY="6.0" />
                </children>
             </Pane>
             <Pane prefHeight="38.0" prefWidth="411.0">
@@ -66,7 +66,7 @@
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <TextField layoutX="226.0" layoutY="6.0" />
+                  <TextField fx:id="partCost" layoutX="226.0" layoutY="6.0" />
                </children>
             </Pane>
             <Pane prefHeight="38.0" prefWidth="411.0">
@@ -76,23 +76,23 @@
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <TextField layoutX="116.0" layoutY="6.0" prefHeight="26.0" prefWidth="106.0" />
+                  <TextField fx:id="partMax" layoutX="116.0" layoutY="6.0" prefHeight="26.0" prefWidth="106.0" />
                   <Label layoutX="250.0" layoutY="10.0" text="Min">
                      <font>
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <TextField layoutX="341.0" layoutY="6.0" prefHeight="26.0" prefWidth="106.0" />
+                  <TextField fx:id="partMin" layoutX="341.0" layoutY="6.0" prefHeight="26.0" prefWidth="106.0" />
                </children>
             </Pane>
             <Pane prefHeight="38.0" prefWidth="411.0">
                <children>
-                  <Label layoutX="14.0" layoutY="11.0" text="Company Name">
+                  <Label fx:id="miscName" layoutX="14.0" layoutY="11.0" text="Company Name">
                      <font>
                         <Font size="15.0" />
                      </font>
                   </Label>
-                  <TextField layoutX="226.0" layoutY="6.0" />
+                  <TextField fx:id="partCompany" layoutX="226.0" layoutY="6.0" />
                </children>
             </Pane>
          </children>
@@ -100,7 +100,7 @@
             <Insets top="20.0" />
          </padding>
       </VBox>
-      <Button layoutX="304.0" layoutY="563.0" mnemonicParsing="false" prefHeight="38.0" prefWidth="97.0" text="Save" />
-      <Button layoutX="413.0" layoutY="563.0" mnemonicParsing="false" onAction="#clickCancelButton" prefHeight="38.0" prefWidth="97.0" text="Cancel" />
+      <Button fx:id="savePartButton" layoutX="304.0" layoutY="563.0" mnemonicParsing="false" onAction="#clickAddSavePart" prefHeight="38.0" prefWidth="97.0" text="Save" />
+      <Button fx:id="cancelButton" layoutX="413.0" layoutY="563.0" mnemonicParsing="false" onAction="#clickCancelButton" prefHeight="38.0" prefWidth="97.0" text="Cancel" />
    </children>
 </AnchorPane>
